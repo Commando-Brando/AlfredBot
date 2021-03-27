@@ -55,7 +55,7 @@ async def on_command_error(ctx, error):
 async def add(ctx, section_num, due_date, due_time, *, assignment):
 
     if(not re.search(r"^[01][[0-9]/[0-3][0-9]/[0-9]{2}$", due_date)):
-       await ctx.send("The due date was not given in the right format: DD/MM/YY")
+       await ctx.send("The due date was not given in the right format: MM/DD/YY")
        return
     
     
