@@ -51,39 +51,57 @@ async def on_command_error(ctx, error):
         if isinstance(error,commands.errors.MissingRequiredArgument):
                 await ctx.send("You are missing an argument. Try !help")
 
+@bot.command(name='add', pass_context=True, help='Add event to a calendar')
+async def add(ctx, section_num, due_date, due_time, *, assignment):
 
-@bot.command(pass_context=True, help='Add event to a calendar')
-async def add(ctx, section_num, *, assignment, due_date, due_time):
-##    jsonFile = {
-##            "section_num": section_num,
-##            "assignment_info": assignment,
-##            "Due_Date": due_date,
-##            "Due_time": time"
-##        }
+    if(not re.search(r"^[01][[0-9]/[0-3][0-9]/[0-9]{2}$", due_date)):
+       await ctx.send("The due date was not given in the right format: DD/MM/YY")
+       return
+    
+    
+    jsonFile = {
+        "section_num": section_num,
+        "assignment_info": assignment,
+        "Due_Date": due_date,
+        "Due_time": due_time
+    }
+
     
     if(ctx.channel.id == cs1083ID):
         try:
-            with open("cs1083.csv", "a") as outfile:
-                outfile.write(section_num +","+ assignment +",", due_date +","+ due_time)
+            with open("cs1083.json", "a") as outfile:
+                json_object = json.dumps(jsonFile, indent = 4)
+                outfile.write(json_object)
             await ctx.send("Event added to calendar")
-##
         except IOError:
-            await ctx.send("There was a problem")
-##            json_object = json.dumps(jsonFile, indent = 4)
-##            with open("cs1083.json", "a") as outfile:
-##                outfile.write(json_object)
-##            #f.close()
-        
-##        
+            await ctx.send("There was a problem")        
     elif(ctx.channel.id == cs1714ID):
-        await ctx.send("add for channel 1714")
+        try:
+            with open("cs1714.json", "a") as outfile:
+                json_object = json.dumps(jsonFile, indent = 4)
+                outfile.write(json_object)
+            await ctx.send("Event added to calendar")
+        except IOError:
+            await ctx.send("There was a problem")  
     elif(ctx.channel.id == cs3443ID):
-        await ctx.send("add for channel 3443")
+        try:
+            with open("cs3443.json", "a") as outfile:
+                json_object = json.dumps(jsonFile, indent = 4)
+                outfile.write(json_object)
+            await ctx.send("Event added to calendar")
+        except IOError:
+            await ctx.send("There was a problem")  
     elif(ctx.channel.id == cs3424ID):
-        await ctx.send("add for channel 3424")
+        try:
+            with open("cs3424.json", "a") as outfile:
+                json_object = json.dumps(jsonFile, indent = 4)
+                outfile.write(json_object)
+            await ctx.send("Event added to calendar")
+        except IOError:
+            await ctx.send("There was a problem")  
     else:
         await ctx.send("There is no calendar for this channel")
-
+        
 @bot.command(name='delete', help='Delete event from a calendar')
 async def deleteEvent(ctx):
    
