@@ -54,7 +54,7 @@ async def on_command_error(ctx, error):
 @bot.command(name='add', pass_context=True, help='Add event to a calendar')
 async def add(ctx, section_num, due_date, due_time, *, assignment):
 
-    if(not re.search(r"^[01][[0-9]/[0-3][0-9]/[0-9]{2}$", due_date)):
+    if(not re.search(r"^[01][0-9]/[0-3][0-9]/[0-9]{2}$", due_date)):
        await ctx.send("The due date was not given in the right format: MM/DD/YY")
        return
     
