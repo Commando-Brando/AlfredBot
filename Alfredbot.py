@@ -52,11 +52,29 @@ async def on_command_error(ctx, error):
                 await ctx.send("You are missing an argument. Try !help")
 
 
-@bot.command(name='add', help='Add event to a calendar')
-async def addEvent(ctx):
-   
+@bot.command(pass_context=True, help='Add event to a calendar')
+async def add(ctx, section_num, *, assignment, due_date, due_time):
+##    jsonFile = {
+##            "section_num": section_num,
+##            "assignment_info": assignment,
+##            "Due_Date": due_date,
+##            "Due_time": time"
+##        }
+    
     if(ctx.channel.id == cs1083ID):
-        await ctx.send("add for channel 1083")
+        try:
+            with open("cs1083.csv", "a") as outfile:
+                outfile.write(section_num +","+ assignment +",", due_date +","+ due_time)
+            await ctx.send("Event added to calendar")
+##
+        except IOError:
+            await ctx.send("There was a problem")
+##            json_object = json.dumps(jsonFile, indent = 4)
+##            with open("cs1083.json", "a") as outfile:
+##                outfile.write(json_object)
+##            #f.close()
+        
+##        
     elif(ctx.channel.id == cs1714ID):
         await ctx.send("add for channel 1714")
     elif(ctx.channel.id == cs3443ID):
