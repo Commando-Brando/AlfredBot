@@ -8,12 +8,38 @@ from discord.ext import commands
 from dotenv import load_dotenv
 from re import search
 
-data_file = "data/data.json"
+courses_file = "data/data.json"
 
 load_dotenv()
 TOKEN = os.getenv('DISCORD_TOKEN')
 
 bot = commands.Bot(command_prefix='!')
+
+
+@bot.command(name='list', help="List the next 10 upcoming assignments.")
+async def list(ctx, section_id):
+    # alfred assigns channel id
+    channel_id = str(ctx.channel.id)
+
+    # open file
+    with open(courses_file) as f:
+        data = json.load(f)
+
+    # sort date
+    list_of_dates = []
+    for value in data[channel_id]['section_id'][section_id]['assignment'].values():
+        list_of_dates.append(value['due_date'])
+    list_of_dates.sort(
+        key=lambda date: datetime.strptime(date, '%m/%d/%y'))
+
+    if channel_id in data:
+        i = 0
+        while i < len(data[channel_id]['section_id'][section_id]['assignment']):
+            for value in data[channel_id]['section_id'][section_id]['assignment'].values():
+                if value['due_date'] == list_of_dates[i]:
+                    await ctx.send(f"{i + 1}: {value['name']} on {list_of_dates[i]}")
+            i += 1
+        return None
 
 
 @bot.command(name='add', pass_context=True, help='Add event to a calendar')
@@ -41,7 +67,7 @@ async def add(ctx, section_num, due_date, due_time, *, assignment):
 
     try:
         # open file
-        with open(data_file) as outfile:
+        with open(courses_file) as outfile:
             json_object = json.load(outfile)
 
             index_length = len(
@@ -49,9 +75,9 @@ async def add(ctx, section_num, due_date, due_time, *, assignment):
 
             json_object[channel_id]['section_id'][section_num]['assignment'][str(
                 index_length)] = new_data
-        
+
         # save file
-        with open(data_file, 'w') as f:
+        with open(courses_file, 'w') as f:
             json.dump(json_object, f)
 
         await ctx.send("Event added to calendar")
@@ -75,7 +101,7 @@ async def next(ctx, course_num, section_id):
         # if channel_id found in database
         while(found):
             # open file
-            with open(data_file) as f:
+            with open(courses_file) as f:
                 data = json.load(f)
 
             # sort date
