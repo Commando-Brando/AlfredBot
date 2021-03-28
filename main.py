@@ -32,18 +32,14 @@ async def list(ctx, section_id):
     list_of_dates.sort(
         key=lambda date: datetime.strptime(date, '%m/%d/%y'))
 
-    print(list_of_dates)
-
     if channel_id in data:
-        keys = []
+        assignment = data[channel_id]['section_id'][section_id]['assignment']
         i = 0
-        for key, value in data[channel_id]['section_id'][section_id]['assignment'].items():
-            print(value['due_date'])
-            print(list_of_dates[i])
+        for key, value in assignment.items():
             if value['due_date'] == list_of_dates[i]:
-                keys.append(key)
-                await ctx.send(f"{i + 1}: {value['name']} on {list_of_dates[i]}")
-            i += 1
+                await ctx.send(f"{i + 1}: {value['name']} on {list_of_dates[i]} at {value['time_due']}")
+                i += 1
+
         return None
 
 
