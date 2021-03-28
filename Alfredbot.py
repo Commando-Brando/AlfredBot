@@ -350,7 +350,7 @@ async def add(ctx, section_num, due_date, due_time, *, assignment):
 
     try:
         # open file
-        with open(courses_file, "r") as outfile:
+        with open(courses_file) as outfile:
             json_object = json.load(outfile)
 
             index_length = len(
@@ -408,32 +408,23 @@ async def next(ctx, course_num, section_id):
         # section id not found
         await ctx.send("Sorry, section ID not found.")
 
+#List function
+@bot.command(name='list', help="List all upcoming assignments.")
+async def list(ctx, section_id):
+    # alfred assigns channel id
+    channel_id = str(ctx.channel.id)
 
-###Get the next 10 from courses calendar
-##@bot.command(name='list', help="List all upcoming assignments.")
-##async def list(ctx, section_id):
-##    # alfred assigns channel id
-##    channel_id = str(ctx.channel.id)
-##
-##    # open file
-##    with open(courses_file) as f:
-##        data = json.load(f)
-##
-##    # sort date
-##    list_of_dates = []
-##    for value in data[channel_id]['section_id'][section_id]['assignment'].values():
-##        list_of_dates.append(value['due_date'])
-##    list_of_dates.sort(
-##        key=lambda date: datetime.strptime(date, '%m/%d/%y'))
-##
-##    if channel_id in data:
-##        i = 0
-##        while i < len(data[channel_id]['section_id'][section_id]['assignment']):
-##            for value in data[channel_id]['section_id'][section_id]['assignment'].values():
-##                if value['due_date'] == list_of_dates[i]:
-##                    await ctx.send(f"{i + 1}: {value['name']} on {list_of_dates[i]}")
-##            i += 1
-##        return None
+    # open file
+    with open(courses_file) as f:
+        data = json.load(f)
+
+    if channel_id in data:
+        assignment = data[channel_id]['section_id'][section_id]['assignment']
+        for key, value in assignment.items():
+            await ctx.send(f"{key}: {value['name']} on {value['due_date']} at {value['time_due']}")
+
+        return None
+
 
 ## Work in progress (Ran out of time) but want to do
 
