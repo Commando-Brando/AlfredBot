@@ -427,7 +427,13 @@ async def List(ctx):
 #async def deleteEvent(ctx, key):
 
 ##Work in progress (Ran out of time)
- 
+
+##Want to add modify an event
+
+##Add reminder
+
+## Add timer
+                                       
 
 #Run program
 bot.run(TOKEN)
