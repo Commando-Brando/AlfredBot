@@ -75,7 +75,7 @@ async def on_command_error(ctx, error):
 
 
 #~~~~Student~~~~~
-                
+     
 #Create a student calendar
 @bot.command(name='myCal', help='Create your own calendar')
 async def myEvents(ctx):
@@ -121,6 +121,8 @@ async def myEvents(ctx):
        await ctx.send("Please provide the due date in this format: MM/DD/YY")
        return
 
+
+##Add to a student calendar
 @bot.command(name='addMyCal', help='add to your calendar')
 async def add(ctx, section_num, due_date, due_time, *, assignment):
     # alfred assigns user id
@@ -258,6 +260,57 @@ async def create(ctx):
             await ctx.send("There is a problem")
 
 
+@bot.command(name='add section', help='Add section for a channel')
+async def addSection(ctx, section_Num):
+    # check if instructor
+    substring = "Instructor"
+    if not search(substring, str(ctx.author.roles)):
+        await ctx.send("You are not an instructor")
+        return
+
+    channel_id = str(ctx.channel.id)
+
+    #check if file exists
+    if(os.path.isfile(courses_file)):
+        await ctx.send("File exists")
+        try:
+            # open file
+            with open(courses_file, "r") as outfile:
+                json_object = json.load(outfile)
+                outfile.close()
+                print(json_object)
+                if json_object[channel_id] != null:
+                   await ctx.send("Channel exists")
+
+                new_data = {
+                    "section_num": section_num
+                }
+                try:
+                    # open file
+                    with open(courses_file, "r") as outfile:
+                        json_object = json.load(outfile)
+
+                        if json_object[channel_id]['section_id'] != section_num:
+                        
+
+                            index_length = len(
+                                json_object[channel_id]['section_id']) + 1
+
+                            json_object[channel_id]['section_id'][str(
+                                index_length)] = new_data
+                        
+                            # save file
+                            with open(courses_file, 'w') as f:
+                                print(json.dump(json_object, f))
+                                json.dump(json_object, f)
+                            outfile.close()
+                            await ctx.send("Section added to calendar")
+                except IOError:
+                    await ctx.send("There was a problem")
+        except IOError:
+            await ctx.send("There was a problem")
+            
+
 @bot.command(name='add', pass_context=True, help='Add event to a calendar')
 async def add(ctx, section_num, due_date, due_time, *, assignment):
     # alfred assigns channel id
@@ -301,7 +354,6 @@ async def add(ctx, section_num, due_date, due_time, *, assignment):
         await ctx.send("There was a problem")
 
     
-
 
 #get next from courses calendar
 @bot.command(name='next', help="Gets the next upcoming assignment(s).")
