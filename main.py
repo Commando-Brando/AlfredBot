@@ -16,7 +16,7 @@ TOKEN = os.getenv('DISCORD_TOKEN')
 bot = commands.Bot(command_prefix='!')
 
 
-@bot.command(name='list', help="List the next 10 upcoming assignments.")
+@bot.command(name='list', help="List all upcoming assignments.")
 async def list(ctx, section_id):
     # alfred assigns channel id
     channel_id = str(ctx.channel.id)

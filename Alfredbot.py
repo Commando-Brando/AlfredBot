@@ -13,6 +13,7 @@ import json
 import re
 from re import search
 from discord.ext import commands
+from datetime import datetime
 
 #from dotenv import load_dotenv
 #load_dotenv()
@@ -94,7 +95,7 @@ async def myEvents(ctx):
                 json_object = json.load(outfile)
                 outfile.close()
                 print(json_object)
-                if json_object[channel_id] != null:
+                if json_object[student_id]:
                    await ctx.send("student id exists")
                    return
         except IOError:
@@ -116,15 +117,10 @@ async def myEvents(ctx):
         except IOError:
             await ctx.send("There is a problem")
 
-    r = re.search(r"^[01][02]/[0-3][0-9]/[0-9]{2}$", due_date)
-    if not r:
-       await ctx.send("Please provide the due date in this format: MM/DD/YY")
-       return
-
 
 ##Add to a student calendar
 @bot.command(name='addMyCal', help='add to your calendar')
-async def add(ctx, section_num, due_date, due_time, *, assignment):
+async def add_cal(ctx, section_num, due_date, due_time, *, assignment):
     # alfred assigns user id
     student_id = str(ctx.author.id)
 
@@ -162,7 +158,7 @@ async def add(ctx, section_num, due_date, due_time, *, assignment):
 
 #Get the next 10 student events
 @bot.command(name='getMyCal', help='Get your a list of all your events')
-async def myEvents(ctx):
+async def get_my_cal(ctx):
     while(True):
         # open file
         with open(courses_file) as f:
@@ -177,11 +173,13 @@ async def myEvents(ctx):
 #MyNext
 #Gives the student their next event
 @bot.command(name='myNext', help='Ge the next event from your own calendar')
-async def myNext(ctx):
+async def myNext(ctx, section_id):
+    channel_id = str(ctx.channel.id)
+
     try:
         while(True):
             # open file
-            with open(Student_file) as f:
+            with open(students_file) as f:
                 data = json.load(f)
 
             # sort date
@@ -239,7 +237,7 @@ async def create(ctx):
                 json_object = json.load(outfile)
                 outfile.close()
                 print(json_object)
-                if json_object[channel_id] != null:
+                if json_object[channel_id]:
                    await ctx.send("Channel exists")
                    return
         except IOError:
@@ -261,7 +259,7 @@ async def create(ctx):
 
 
 @bot.command(name='addSection', help='Add section for a channel')
-async def addSection(ctx, section_Num):
+async def addSection(ctx, section_num):
     # check if instructor
     substring = "Instructor"
     if not search(substring, str(ctx.author.roles)):
@@ -279,7 +277,7 @@ async def addSection(ctx, section_Num):
                 json_object = json.load(outfile)
                 outfile.close()
                 print(json_object)
-                if json_object[channel_id] != null:
+                if json_object[channel_id]:
                    await ctx.send("Channel exists")
 
                 new_data = {
@@ -372,7 +370,7 @@ async def next(ctx, course_num, section_id):
         # if channel_id found in database
         while(found):
             # open file
-            with open(data_file) as f:
+            with open(courses_file) as f:
                 data = json.load(f)
 
             # sort date
@@ -398,28 +396,30 @@ async def next(ctx, course_num, section_id):
 
 
 #Get the next 10 from courses calendar
-@bot.command(name='list', help='List all events for a calendar')
-async def List(ctx):
-    
-    keyVal = ctx.channel.id
+@bot.command(name='list', help="List all upcoming assignments.")
+async def list(ctx, section_id):
+    # alfred assigns channel id
+    channel_id = str(ctx.channel.id)
 
-    with open(courses_file, 'r') as openfile:
-        json_object = json.load(openfile)
-        openfile.close()
-    print(json_object)
-    print(json_object["channel_id"])
+    # open file
+    with open(courses_file) as f:
+        data = json.load(f)
 
-    x = json_object.channel_id
+    # sort date
+    list_of_dates = []
+    for value in data[channel_id]['section_id'][section_id]['assignment'].values():
+        list_of_dates.append(value['due_date'])
+    list_of_dates.sort(
+        key=lambda date: datetime.strptime(date, '%m/%d/%y'))
 
-    #f(
-##    try:
-##        if keyVal in json_object:
-##            print('here')
-##            await ctx.send("list for channel")
-##        else:
-##            await ctx.send("There are no upcoming events for this channel")
-##    except:
-##        await ctx.send("There was a problem")   
+    if channel_id in data:
+        i = 0
+        while i < len(data[channel_id]['section_id'][section_id]['assignment']):
+            for value in data[channel_id]['section_id'][section_id]['assignment'].values():
+                if value['due_date'] == list_of_dates[i]:
+                    await ctx.send(f"{i + 1}: {value['name']} on {list_of_dates[i]}")
+            i += 1
+        return None
 
 
 #Delete an event from courses calendar
