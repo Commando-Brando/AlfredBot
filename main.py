@@ -1,4 +1,3 @@
-# bot.py
 import os
 import random
 import json
@@ -16,34 +15,42 @@ bot = commands.Bot(command_prefix='!')
 
 
 @bot.command(name='next', help="Gets the next upcoming assignment(s).")
-async def next(ctx, course_num):
-    found = False
+async def next(ctx, course_num, section_id):
+    try:
+        # if course is found within server
+        found = False
 
-    # search through all channels and
-    # match channel name with channel_id
-    for channel in ctx.guild.channels:
-        if channel.name == course_num:
-            channel_id = str(channel.id)
-            found = True
+        # search through all channels and
+        # match channel name with channel_id
+        for channel in ctx.guild.channels:
+            if channel.name == course_num:
+                channel_id = str(channel.id)
+                found = True  # found course
 
-    while(found):
-        # open file
-        with open(data_file) as f:
-            data = json.load(f)
+        # if channel_id found in database
+        while(found):
+            # open file
+            with open(data_file) as f:
+                data = json.load(f)
 
-        # sort date
-        list_of_dates = []
-        for date in data[channel_id]['due_dates']:
-            list_of_dates.append(date)
-        list_of_dates.sort(key=lambda date: datetime.strptime(date, '%m/%d/%y'))
+            # sort date
+            list_of_dates = []
+            for value in data[channel_id]['section_id'][section_id]['assignment'].values():
+                list_of_dates.append(value['due_date'])
+            list_of_dates.sort(
+                key=lambda date: datetime.strptime(date, '%m/%d/%y'))
 
-        # check for assignments
-        if channel_id in data:
-            for assignment in data[channel_id]['due_dates'][list_of_dates[0]]:
-                await ctx.send(f"Next assignment: {assignment} on {list_of_dates[0]}")
-            return None
+            # check for assignments
+            if channel_id in data:
+                for value in data[channel_id]['section_id'][section_id]['assignment'].values():
+                    if value['due_date'] == list_of_dates[0]:
+                        await ctx.send(f"Next assignment: {value['name']} on {list_of_dates[0]}")
+                return None
 
-    # no course exist
-    await ctx.send("Sorry, course does not exist.")
+        # no course exist
+        await ctx.send("Sorry, course not found.")
+    except:
+        # section id not found
+        await ctx.send("Sorry, section ID not found.")
 
 bot.run(TOKEN)
