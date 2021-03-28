@@ -19,8 +19,7 @@ from discord.ext import commands
 #TOKEN = os.getenv('DISCORD_TOKEN')
 #GUILD = os.getenv('DISCORD_GUILD')
 
-TOKEN = 'ODI1MjAxMjI3MTM3NTQ4MzI5.YF6eiA.nZa45Ra_yeEd6dr7M84jJP-ijw0' #Alfred
-#TOKEN = 'ODI1MTc0MzcxMTM1MTI3NTcz.YF6FhQ.jH_CtT-0dGjfpuFH9lix7_Eoqao'#AlfredBot
+TOKEN = '' #Alfred
 
 #create data folder if DNE
 if not os.path.exists('data'):
