@@ -81,41 +81,42 @@ async def on_command_error(ctx, error):
 @bot.command(name='myCal', help='Create your own calendar')
 async def CreateOwnCalendar(ctx):
 
-#If file exists check if student Id exists. If it doesn't then add channel calandar.
-#If it does then return
+    #If file exists check if student Id exists. If it doesn't then add channel calandar.
+    #If it does then return
 
     student_id = str(ctx.author.id)
+    try:
+        #check if file exists
+        if(os.path.isfile(students_file)):
+            await ctx.send("File exists")
 
-    #check if file exists
-    if(os.path.isfile(students_file)):
-        await ctx.send("File exists")
-        try:
             # open file
-            with open(students_file, "r") as outfile:
-                json_object = json.load(outfile)
-                outfile.close()
+            with open(students_file, "r") as infile:
+                json_object = json.load(infile)
+                infile.close()
                 print(json_object)
-                if json_object[student_id]:
-                   await ctx.send("student id exists")
-                   return
-        except IOError:
-            await ctx.send("There is a problem")
-            
-    else:
+                print(json_object[student_id])
+                #if json_object[student_id]:
+                #    await ctx.send("student id exists")
+                #    return
 
         new_data = {
-            "student_name" : str(ctx.author),
+            "student_name": str(ctx.author),
             "course_name": str(ctx.channel.name)
         }
-        
 
-        try:
-            with open(students_file, "a") as outfile:
-                outfile.write("'"+student_id+"': " + json.dumps(new_data))
-                outfile.close()
-                await ctx.send("Event added to calendar")
-        except IOError:
-            await ctx.send("There is a problem")
+        # load file
+        with open(students_file) as outfile:
+            json_object = json.load(outfile)
+            json_object[student_id] = new_data
+
+        # save file
+        with open(students_file, 'w') as f:
+            json.dump(json_object, f)
+
+        await ctx.send("Event added to calendar")
+    except IOError:
+        await ctx.send("There is a problem")
 
 
 ##Add to a student calendar

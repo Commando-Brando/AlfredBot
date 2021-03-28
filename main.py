@@ -32,12 +32,17 @@ async def list(ctx, section_id):
     list_of_dates.sort(
         key=lambda date: datetime.strptime(date, '%m/%d/%y'))
 
+    print(list_of_dates)
+
     if channel_id in data:
+        keys = []
         i = 0
-        while i < len(data[channel_id]['section_id'][section_id]['assignment']):
-            for value in data[channel_id]['section_id'][section_id]['assignment'].values():
-                if value['due_date'] == list_of_dates[i]:
-                    await ctx.send(f"{i + 1}: {value['name']} on {list_of_dates[i]}")
+        for key, value in data[channel_id]['section_id'][section_id]['assignment'].items():
+            print(value['due_date'])
+            print(list_of_dates[i])
+            if value['due_date'] == list_of_dates[i]:
+                keys.append(key)
+                await ctx.send(f"{i + 1}: {value['name']} on {list_of_dates[i]}")
             i += 1
         return None
 
@@ -123,5 +128,6 @@ async def next(ctx, course_num, section_id):
     except:
         # section id not found
         await ctx.send("Sorry, section ID not found.")
+
 
 bot.run(TOKEN)
