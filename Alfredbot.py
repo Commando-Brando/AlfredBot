@@ -78,7 +78,7 @@ async def on_command_error(ctx, error):
      
 #Create a student calendar
 @bot.command(name='myCal', help='Create your own calendar')
-async def myEvents(ctx):
+async def CreateOwnCalendar(ctx):
 
 #If file exists check if student Id exists. If it doesn't then add channel calandar.
 #If it does then return
@@ -124,7 +124,7 @@ async def myEvents(ctx):
 
 ##Add to a student calendar
 @bot.command(name='addMyCal', help='add to your calendar')
-async def add(ctx, section_num, due_date, due_time, *, assignment):
+async def addToStudentCal(ctx, section_num, due_date, due_time, *, assignment):
     # alfred assigns user id
     student_id = str(ctx.author.id)
 
@@ -426,21 +426,40 @@ async def list(ctx, section_id):
         return None
 
 
+## Work in progress (Ran out of time) but want to do
 
 #Delete an event from courses calendar
 #@bot.command(name='delete', help='Delete event from a calendar')
 #async def deleteEvent(ctx, key):
 
-##Work in progress (Ran out of time)
+## Want to add so that you can modify an event
 
-##Want to add modify an event
+## Add reminder
+#~~ Partial code to get how much time is left.
 
+##    
+##    #Specified date
+##    date = 10/20/30
+##    date1 = datetime.strptime(date, '%m/%d/%Y %H:%M')
 
-##Add reminder
+#Current date
+##    date2 = datetime.now()
+##
+##    await ctx.send("Added assignment to the calendar at: "+ str(date2) + " which is due at: " + str(date1))
+##    await ctx.send("(" + "%d days, %d hours, %d minutes" % dhms_from_seconds(date_diff_in_seconds(date1, date2))+")")
+##
+##def date_diff_in_seconds(dt2, dt1):
+##    timedelta = dt2 - dt1
+##    return timedelta.days * 24 * 3600 + timedelta.seconds
+##
+##def dhms_from_seconds(seconds):
+##	minutes, seconds = divmod(seconds, 60)
+##	hours, minutes = divmod(minutes, 60)
+##	days, hours = divmod(hours, 24)
+##	return (days, hours, minutes)
 
 ## Add timer
 
 
 #Run program
 bot.run(TOKEN)
-    
