@@ -15,16 +15,15 @@ import re
 from re import search
 from discord.ext import commands
 from datetime import datetime
-from dateutil.tz import *
+from dateutil import *
 from datetime import datetime, time
-
 
 
 #from dotenv import load_dotenv
 #load_dotenv()
 #TOKEN = os.getenv('DISCORD_TOKEN')
 
-TOKEN = '' #Alfred
+TOKEN = ''  # Alfred
 
 #create data folder if DNE
 if not os.path.exists('data'):
@@ -37,51 +36,56 @@ students_file = "data/students.json"
 bot = commands.Bot(command_prefix='!')
 
 #On ready
+
+
 @bot.event
 async def on_ready():
     print(f'{bot.user.name} has connected to Discord!')
 
 #Quotes
-@bot.command(name='quote', help='Random quotes')
-async def Alfred_quote(ctx): 
 
-    quotes= [
-            'Intrepid? I rather think of myself as "dauntless"',
-            'Yes sir, we are all doomed',
-            'You Start Pretending To Have Fun, You Might Even Have A Little By Accident.',
-            "Don't Worry, Master Wayne. Takes A Little Time To Get Back In The Swing Of Things.",
-            "They'll Hate You For It, But That's The Point Of Batman.",
-            "You're Just Waiting, Hoping For Things To Go Bad Again.",
-            "Things Always Get Worse Before They Get Better.",
-            "Why Do We Fall, Sir? So That We Can Learn To Pick Ourselves Up."       
+
+@bot.command(name='quote', help='Random quotes')
+async def Alfred_quote(ctx):
+
+    quotes = [
+        'Intrepid? I rather think of myself as "dauntless"',
+        'Yes sir, we are all doomed',
+        'You Start Pretending To Have Fun, You Might Even Have A Little By Accident.',
+        "Don't Worry, Master Wayne. Takes A Little Time To Get Back In The Swing Of Things.",
+        "They'll Hate You For It, But That's The Point Of Batman.",
+        "You're Just Waiting, Hoping For Things To Go Bad Again.",
+        "Things Always Get Worse Before They Get Better.",
+        "Why Do We Fall, Sir? So That We Can Learn To Pick Ourselves Up."
     ]
 
     response = random.choice(quotes)
     await ctx.send(response)
 
-    
+
 #DM someone from a bot
 @bot.command(pass_context=True, help="Alfred direct messages a specific user")
 async def DM(ctx, user: discord.User, *, message):
     message = message or "This Message is sent via DM"
     await user.send(message)
 
-#Have the bot PM you _ so you can ask about your events privately 
+#Have the bot PM you _ so you can ask about your events privately
+
+
 @bot.command(name='PM', help="Alfred private messages you")
 async def PrivateMessage(ctx):
-            await ctx.author.send('Hello sir, you asked me to PM you.\nHow can I be of service?')
+    await ctx.author.send('Hello sir, you asked me to PM you.\nHow can I be of service?')
 
 
 #If there is an error (missing argument)
 @bot.event
 async def on_command_error(ctx, error):
-        if isinstance(error,commands.errors.MissingRequiredArgument):
-                await ctx.send("You are missing an argument. Try !help")
-
+    if isinstance(error, commands.errors.MissingRequiredArgument):
+        await ctx.send("You are missing an argument. Try !help")
 
 
 #~~~~Student~~~~~
-     
+
 #Create a student calendar
 @bot.command(name='myCal', help='Create your own calendar')
 async def CreateOwnCalendar(ctx):
@@ -101,13 +105,14 @@ async def CreateOwnCalendar(ctx):
             #     infile.close()
             #     print(json_object)
             #     print(json_object[student_id])
-                #if json_object[student_id]:
-                #    await ctx.send("student id exists")
-                #    return
+            #if json_object[student_id]:
+            #    await ctx.send("student id exists")
+            #    return
 
         new_data = {
             "student_name": str(ctx.author),
-            "course_name": str(ctx.channel.name)
+            "course_name": str(ctx.channel.name),
+            "assignment": None
         }
 
         # load file
@@ -124,7 +129,6 @@ async def CreateOwnCalendar(ctx):
         await ctx.send("Event added to calendar")
     except IOError:
         await ctx.send("There is a problem")
-
 
 
 ##Add to a student calendar
@@ -151,11 +155,10 @@ async def add_cal(ctx, due_date, due_time, *, assignment):
             json_object = json.load(outfile)
 
             index_length = len(
-                json_object[student_id]['section_id'][section_num]['assignment']) + 1
+                json_object[student_id]['assignment']) + 1
 
-            json_object[student_id]['section_id'][section_num]['assignment'][str(
-                index_length)] = new_data
-        outfile,close()
+            json_object[student_id]['assignment'][str(index_length)] = new_data
+
         # save file
         with open(students_file, 'w') as f:
             json.dump(json_object, f)
@@ -173,13 +176,13 @@ async def add_cal(ctx, due_date, due_time, *, assignment):
 ##        # open file
 ##        with open(courses_file) as f:
 ##            data = json.load(f)
-##    
+##
 ##        if ctx.author.id == data.student_id:
 ##            await ctx.send("student has a calendar")
 ##        else:
 ##            return
 
-    
+
 #MyNext
 #Gives the student their next event
 @bot.command(name='myNext', help='Get the next event from your own calendar')
@@ -213,7 +216,6 @@ async def myNext(ctx, section_id):
         await ctx.send("Sorry, section ID not found.")
 
 
-
 ###MyDelete
 ##@bot.command(name='myDelete', help='delete an event from your own calendar')
 ##async def myDelete(ctx):
@@ -221,7 +223,6 @@ async def myNext(ctx, section_id):
 ##Work in progress (Ran out of time)
 
 ##Want to add modify an event
-
 
 
 ##~~~~Course~~~~~
@@ -254,14 +255,14 @@ async def create(ctx, section_num):
                    return
         except IOError:
             await ctx.send("There is a problem")
-            
+
     else:
 
         new_data = {
-            channel_id :{
-            "course_name": str(ctx.channel.name),
-            "section_id":{
-                section_num
+            channel_id: {
+                "course_name": str(ctx.channel.name),
+                "section_id": {
+                    section_num
                 }
             }
         }
@@ -305,14 +306,13 @@ async def addSection(ctx, section_num):
                         json_object = json.load(outfile)
 
                         if json_object[channel_id]['section_id'] != section_num:
-                        
 
                             index_length = len(
                                 json_object[channel_id]['section_id']) + 1
 
                             json_object[channel_id]['section_id'][str(
                                 index_length)] = new_data
-                        
+
                             # save file
                             with open(courses_file, 'w') as f:
                                 print(json.dump(json_object, f))
@@ -323,7 +323,7 @@ async def addSection(ctx, section_num):
                     await ctx.send("There was a problem")
         except IOError:
             await ctx.send("There was a problem")
-            
+
 
 @bot.command(name='add', pass_context=True, help='Add event to a calendar')
 async def add(ctx, section_num, due_date, due_time, *, assignment):
@@ -358,7 +358,7 @@ async def add(ctx, section_num, due_date, due_time, *, assignment):
 
             json_object[channel_id]['section_id'][section_num]['assignment'][str(
                 index_length)] = new_data
-        
+
         # save file
         with open(courses_file, 'w') as f:
             json.dump(json_object, f)
@@ -366,7 +366,6 @@ async def add(ctx, section_num, due_date, due_time, *, assignment):
         await ctx.send("Event added to calendar")
     except IOError:
         await ctx.send("There was a problem")
-
 
 
 #get next from courses calendar
@@ -408,7 +407,6 @@ async def next(ctx, course_num, section_id):
     except:
         # section id not found
         await ctx.send("Sorry, section ID not found.")
-
 
 
 ###Get the next 10 from courses calendar
@@ -502,4 +500,3 @@ async def next(ctx, course_num, section_id):
 
 #Run program
 bot.run(TOKEN)
-
