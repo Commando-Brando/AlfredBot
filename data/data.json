@@ -1,5 +1,66 @@
 {
     "825424192349667378": {
-        "course_name": "Intro to CS"
+        "course_name": "Programming I for Computer Scientists",
+        "due_dates": {
+            "3/27/21": [
+                "Assignment 1",
+                "Assignment 2",
+                "Assignment 3"
+            ],
+            "3/30/21": [
+                "Assignment 3"
+            ],
+            "04/02/21": [
+                "Exam 1"
+            ]
+        }
+    },
+    "825424262184566804": {
+        "course_name": "Computer Programming II",
+        "due_dates": {
+            "3/27/21": [
+                "Assignment 4",
+                "Assignment 5",
+                "Assignment 6"
+            ],
+            "3/30/21": [
+                "Assignment 3"
+            ],
+            "04/02/21": [
+                "Exam 1"
+            ]
+        }
+    },
+    "825424217394511902": {
+        "course_name": "Application Programming",
+        "due_dates": {
+            "3/27/21": [
+                "Assignment 7",
+                "Assignment 8",
+                "Assignment 9"
+            ],
+            "3/30/21": [
+                "Assignment 3"
+            ],
+            "04/02/21": [
+                "Exam 1"
+            ]
+        }
+    },
+    "825424239883845702": {
+        "course_name": "Systems Programming",
+        "due_dates": {
+            "3/27/21": [
+                "Assignment 10",
+                "Assignment 11",
+                "Assignment 12"
+            ],
+            "3/30/21": [
+                "Assignment 3"
+            ],
+            "04/02/21": [
+                "Exam 1"
+            ]
+        }
     }
 }
