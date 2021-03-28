@@ -260,7 +260,7 @@ async def create(ctx):
             await ctx.send("There is a problem")
 
 
-@bot.command(name='add section', help='Add section for a channel')
+@bot.command(name='addSection', help='Add section for a channel')
 async def addSection(ctx, section_Num):
     # check if instructor
     substring = "Instructor"
