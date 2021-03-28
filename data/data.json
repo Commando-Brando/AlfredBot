@@ -1,0 +1,174 @@
+{
+    "825424192349667378": {
+        "course_name": "cs1083",
+        "section_id": {
+            "001": {
+                "assignment": {
+                    "1": {
+                        "name": "How to Print a Variable",
+                        "due_date": "4/7/21",
+                        "time_due": "11:59pm"
+                    },
+                    "2": {
+                        "name": "Data Types",
+                        "due_date": "4/15/21",
+                        "time_due": "11:59pm"
+                    },
+                    "3": {
+                        "name": "What is a program?",
+                        "due_date": "4/21/21",
+                        "time_due": "11:59pm"
+                    }
+                }
+            },
+            "002": {
+                "assignment": {
+                    "1": {
+                        "name": "How to Print a Variable",
+                        "due_date": "4/9/21",
+                        "time_due": "11:59pm"
+                    },
+                    "2": {
+                        "name": "Data Types",
+                        "due_date": "4/17/21",
+                        "time_due": "11:59pm"
+                    },
+                    "3": {
+                        "name": "What is a program?",
+                        "due_date": "4/23/21",
+                        "time_due": "11:59pm"
+                    }
+                }
+            }
+        }
+    },
+    "825424262184566804": {
+        "course_name": "cs1714",
+        "section_id": {
+            "001": {
+                "assignment": {
+                    "1": {
+                        "name": "How to Print a Variable",
+                        "due_date": "4/7/21",
+                        "time_due": "11:59pm"
+                    },
+                    "2": {
+                        "name": "Data Types",
+                        "due_date": "4/15/21",
+                        "time_due": "11:59pm"
+                    },
+                    "3": {
+                        "name": "What is a program?",
+                        "due_date": "4/21/21",
+                        "time_due": "11:59pm"
+                    }
+                }
+            },
+            "002": {
+                "assignment": {
+                    "1": {
+                        "name": "How to Print a Variable",
+                        "due_date": "4/9/21",
+                        "time_due": "11:59pm"
+                    },
+                    "2": {
+                        "name": "Data Types",
+                        "due_date": "4/17/21",
+                        "time_due": "11:59pm"
+                    },
+                    "3": {
+                        "name": "What is a program?",
+                        "due_date": "4/23/21",
+                        "time_due": "11:59pm"
+                    }
+                }
+            }
+        }
+    },
+    "825424217394511902": {
+        "course_name": "cs3443",
+        "section_id": {
+            "001": {
+                "assignment": {
+                    "1": {
+                        "name": "How to Print a Variable",
+                        "due_date": "4/7/21",
+                        "time_due": "11:59pm"
+                    },
+                    "2": {
+                        "name": "Data Types",
+                        "due_date": "4/15/21",
+                        "time_due": "11:59pm"
+                    },
+                    "3": {
+                        "name": "What is a program?",
+                        "due_date": "4/21/21",
+                        "time_due": "11:59pm"
+                    }
+                }
+            },
+            "002": {
+                "assignment": {
+                    "1": {
+                        "name": "How to Print a Variable",
+                        "due_date": "4/9/21",
+                        "time_due": "11:59pm"
+                    },
+                    "2": {
+                        "name": "Data Types",
+                        "due_date": "4/17/21",
+                        "time_due": "11:59pm"
+                    },
+                    "3": {
+                        "name": "What is a program?",
+                        "due_date": "4/23/21",
+                        "time_due": "11:59pm"
+                    }
+                }
+            }
+        }
+    },
+    "825424239883845702": {
+        "course_name": "cs3424",
+        "section_id": {
+            "001": {
+                "assignment": {
+                    "1": {
+                        "name": "How to Print a Variable",
+                        "due_date": "4/7/21",
+                        "time_due": "11:59pm"
+                    },
+                    "2": {
+                        "name": "Data Types",
+                        "due_date": "4/15/21",
+                        "time_due": "11:59pm"
+                    },
+                    "3": {
+                        "name": "What is a program?",
+                        "due_date": "4/21/21",
+                        "time_due": "11:59pm"
+                    }
+                }
+            },
+            "002": {
+                "assignment": {
+                    "1": {
+                        "name": "How to Print a Variable",
+                        "due_date": "4/9/21",
+                        "time_due": "11:59pm"
+                    },
+                    "2": {
+                        "name": "Data Types",
+                        "due_date": "4/17/21",
+                        "time_due": "11:59pm"
+                    },
+                    "3": {
+                        "name": "What is a program?",
+                        "due_date": "4/23/21",
+                        "time_due": "11:59pm"
+                    }
+                }
+            }
+        }
+    }
+}
