@@ -19,7 +19,7 @@ from discord.ext import commands
 #TOKEN = os.getenv('DISCORD_TOKEN')
 #GUILD = os.getenv('DISCORD_GUILD')
 
-TOKEN = ''  # Alfred
+TOKEN = '' #Alfred
 
 #create data folder if DNE
 if not os.path.exists('data'):
@@ -32,15 +32,11 @@ students_file = "data/students.json"
 bot = commands.Bot(command_prefix='!')
 
 #On ready
-
-
 @bot.event
 async def on_ready():
     print(f'{bot.user.name} has connected to Discord!')
 
 #Quotes
-
-
 @bot.command(name='quote', help='Random quotes')
 async def Alfred_quote(ctx):
 
@@ -52,19 +48,17 @@ async def Alfred_quote(ctx):
     response = random.choice(quotes)
     await ctx.send(response)
 
-
+    
 #DM someone from a bot
 @bot.command(pass_context=True, help="Alfred direct messages a specific user")
 async def DM(ctx, user: discord.User, *, message):
     message = message or "This Message is sent via DM"
     await user.send(message)
 
-#Have the bot PM you _ so you can ask about your events privately
-
-
+#Have the bot PM you _ so you can ask about your events privately 
 @bot.command(name='PM', help="Alfred private messages you")
 async def PrivateMessage(ctx):
-    await ctx.author.send('Hello sir, you asked me to PM you.\nHow can I be of service?')
+            await ctx.author.send('Hello sir, you asked me to PM you.\nHow can I be of service?')
 
 
 #If there is an error (missing argument)
@@ -101,22 +95,48 @@ async def myEvents(ctx):
     except IOError:
         await ctx.send("There was a problem")
 
+
+#Student events
+@bot.command(name='myCal', help='Create your own calendar')
+async def myEvents(ctx):
+
+    r = re.search(r"^[01][02]/[0-3][0-9]/[0-9]{2}$", due_date)
+    if not r:
+       await ctx.send("Please provide the due date in this format: MM/DD/YY")
+       return
+
+    jsonFile = {
+        "student_name" : str(ctx.author),
+        "student_id" : str(ctx.author.id),
+        "section_num": section_num,
+        "assignment_info": assignment,
+        "Due_Date": due_date,
+        "Due_time": due_time
+    }
+
+    try:
+        with open(students_file, "a") as outfile:
+            json_object = json.dumps(jsonFile, indent = 4)
+            outfile.write(json_object)
+            outfile.close()
+            await ctx.send("Event added to calendar")
+    except IOError:
+        await ctx.send("There was a problem")
+
 #Get student events
-
-
 @bot.command(name='getMyCal', help='Get your calendar')
 async def myEvents(ctx):
     while(True):
         # open file
         with open(courses_file) as f:
             data = json.load(f)
-
+    
         if ctx.author.id == data.student_id:
             await ctx.send("student has a calendar")
         else:
             return
 
-
+    
 #MyNext
 
 #MyDelete
@@ -126,17 +146,17 @@ async def myEvents(ctx):
 async def add(ctx, section_num, due_date, due_time, *, assignment):
 
     substring = "Instructor"
-    if not search(substring, str(ctx.author.roles)):
+    if not search(substring,str(ctx.author.roles)):
         await ctx.send("You are not an instructor")
         return
-
+        
     r = re.search(r"^[01][02]/[0-3][0-9]/[0-9]{2}$", due_date)
     if not r:
        await ctx.send("Please provide the due date in this format: MM/DD/YY")
        return
-
+    
     jsonFile = {
-        "channel_id": str(ctx.channel.id),
+        "channel_id" : str(ctx.channel.id),
         "section_num": section_num,
         "assignment_info": assignment,
         "Due_Date": due_date,
@@ -145,12 +165,17 @@ async def add(ctx, section_num, due_date, due_time, *, assignment):
 
     try:
         with open(courses_file, "a") as outfile:
-            json_object = json.dumps(jsonFile, indent=4)
+            json_object = json.dumps(jsonFile, indent = 4)
             outfile.write(json_object)
             outfile.close()
             await ctx.send("Event added to calendar")
     except IOError:
-        await ctx.send("There was a problem")
+        await ctx.send("There was a problem")   
+
+    
+    
+
+
 
 
 #get next from courses calendar
@@ -174,8 +199,7 @@ async def next(ctx, course_num):
         list_of_dates = []
         for date in data[channel_id]['due_dates']:
             list_of_dates.append(date)
-        list_of_dates.sort(
-            key=lambda date: datetime.strptime(date, '%m/%d/%y'))
+        list_of_dates.sort(key=lambda date: datetime.strptime(date, '%m/%d/%y'))
 
         # check for assignments
         if channel_id in data:
@@ -191,11 +215,14 @@ async def next(ctx, course_num):
 #@bot.command(name='delete', help='Delete event from a calendar')
 #async def deleteEvent(ctx, section_num, due_date, due_time, *, assignment):
 
+   
+
+
 
 #Get all from courses calendar
 @bot.command(name='list', help='List all events for a calendar')
 async def ListAll(ctx):
-
+    
     keyVal = ctx.channel.id
 
     with open(courses_file, 'r') as openfile:
@@ -214,8 +241,9 @@ async def ListAll(ctx):
 ##        else:
 ##            await ctx.send("There are no upcoming events for this channel")
 ##    except:
-##        await ctx.send("There was a problem")
+##        await ctx.send("There was a problem")   
 
+ 
 
 #Run program
 bot.run(TOKEN)
