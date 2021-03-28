@@ -212,6 +212,8 @@ async def myNext(ctx):
 
 ##Work in progress (Ran out of time)
 
+##Want to add modify an event
+
 
 
 ##~~~~Course~~~~~
@@ -272,7 +274,6 @@ async def addSection(ctx, section_Num):
 
     #check if file exists
     if(os.path.isfile(courses_file)):
-        await ctx.send("File exists")
         try:
             # open file
             with open(courses_file, "r") as outfile:
@@ -397,29 +398,33 @@ async def next(ctx, course_num, section_id):
 
 
 
-#Get the next 10 from courses calendar
-@bot.command(name='list', help='List all events for a calendar')
-async def List(ctx):
+#Get all the assignments from courses calendar
+@bot.command(name='list', help="List all the upcoming assignments.")
+async def list(ctx, section_id):
+    # alfred assigns channel id
+    channel_id = str(ctx.channel.id)
+
+    # open file
+    with open(courses_file, "r") as f:
+        data = json.load(f)
     
-    keyVal = ctx.channel.id
+    # sort date
+    list_of_dates = []
+    for value in data[channel_id]['section_id'][section_id]['assignment'].values():
+        list_of_dates.append(value['due_date'])
+    list_of_dates.sort(
+        key=lambda date: datetime.strptime(date, '%m/%d/%y'))
 
-    with open(courses_file, 'r') as openfile:
-        json_object = json.load(openfile)
-        openfile.close()
-    print(json_object)
-    print(json_object["channel_id"])
+    if channel_id in data:
+        i = 0
+        while i < len(data[channel_id]['section_id'][section_id]['assignment']):
+            for value in data[channel_id]['section_id'][section_id]['assignment'].values():
+                if value['due_date'] == list_of_dates[i]:
+                    await ctx.send(f"{i + 1}: {value['name']} on {list_of_dates[i]}")
+            i += 1
+        f.close()
+        return None
 
-    x = json_object.channel_id
-
-    #f(
-##    try:
-##        if keyVal in json_object:
-##            print('here')
-##            await ctx.send("list for channel")
-##        else:
-##            await ctx.send("There are no upcoming events for this channel")
-##    except:
-##        await ctx.send("There was a problem")   
 
 
 #Delete an event from courses calendar
@@ -430,10 +435,12 @@ async def List(ctx):
 
 ##Want to add modify an event
 
+
 ##Add reminder
 
 ## Add timer
-                                       
+
 
 #Run program
 bot.run(TOKEN)
+    
