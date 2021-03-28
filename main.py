@@ -21,15 +21,17 @@ async def add(ctx, section_num, due_date, due_time, *, assignment):
     # alfred assigns channel id
     channel_id = str(ctx.channel.id)
 
-    # substring = "Instructor"
-    # if not search(substring, str(ctx.author.roles)):
-    #     await ctx.send("You are not an instructor")
-    #     return
+    # check if instructor
+    substring = "Instructor"
+    if not search(substring, str(ctx.author.roles)):
+        await ctx.send("You are not an instructor")
+        return
 
-    # r = re.search(r"^[01][02]/[0-3][0-9]/[0-9]{2}$", due_date)
-    # if not r:
-    #     await ctx.send("Please provide the due date in this format: MM/DD/YY")
-    #     return
+    # check if date formatted correctly
+    r = re.search(r"^[01][02]/[0-3][0-9]/[0-9]{2}$", due_date)
+    if not r:
+        await ctx.send("Please provide the due date in this format: MM/DD/YY")
+        return
 
     new_data = {
         "name": assignment,
@@ -38,6 +40,7 @@ async def add(ctx, section_num, due_date, due_time, *, assignment):
     }
 
     try:
+        # open file
         with open(data_file) as outfile:
             json_object = json.load(outfile)
 
@@ -46,11 +49,12 @@ async def add(ctx, section_num, due_date, due_time, *, assignment):
 
             json_object[channel_id]['section_id'][section_num]['assignment'][str(
                 index_length)] = new_data
+        
+        # save file
+        with open(data_file, 'w') as f:
+            json.dump(json_object, f)
 
-            print(json_object[channel_id]['section_id'][section_num]['assignment'])
-
-            outfile.write(json_object)
-            await ctx.send("Event added to calendar")
+        await ctx.send("Event added to calendar")
     except IOError:
         await ctx.send("There was a problem")
 
