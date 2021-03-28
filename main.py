@@ -1,10 +1,12 @@
 import os
 import random
 import json
+import re
 
 from datetime import datetime
 from discord.ext import commands
 from dotenv import load_dotenv
+from re import search
 
 data_file = "data/data.json"
 
@@ -12,6 +14,45 @@ load_dotenv()
 TOKEN = os.getenv('DISCORD_TOKEN')
 
 bot = commands.Bot(command_prefix='!')
+
+
+@bot.command(name='add', pass_context=True, help='Add event to a calendar')
+async def add(ctx, section_num, due_date, due_time, *, assignment):
+    # alfred assigns channel id
+    channel_id = str(ctx.channel.id)
+
+    # substring = "Instructor"
+    # if not search(substring, str(ctx.author.roles)):
+    #     await ctx.send("You are not an instructor")
+    #     return
+
+    # r = re.search(r"^[01][02]/[0-3][0-9]/[0-9]{2}$", due_date)
+    # if not r:
+    #     await ctx.send("Please provide the due date in this format: MM/DD/YY")
+    #     return
+
+    new_data = {
+        "name": assignment,
+        "due_date": due_date,
+        "time_due": due_time
+    }
+
+    try:
+        with open(data_file) as outfile:
+            json_object = json.load(outfile)
+
+            index_length = len(
+                json_object[channel_id]['section_id'][section_num]['assignment']) + 1
+
+            json_object[channel_id]['section_id'][section_num]['assignment'][str(
+                index_length)] = new_data
+
+            print(json_object[channel_id]['section_id'][section_num]['assignment'])
+
+            outfile.write(json_object)
+            await ctx.send("Event added to calendar")
+    except IOError:
+        await ctx.send("There was a problem")
 
 
 @bot.command(name='next', help="Gets the next upcoming assignment(s).")
