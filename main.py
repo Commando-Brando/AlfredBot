@@ -25,20 +25,10 @@ async def list(ctx, section_id):
     with open(courses_file) as f:
         data = json.load(f)
 
-    # sort date
-    list_of_dates = []
-    for value in data[channel_id]['section_id'][section_id]['assignment'].values():
-        list_of_dates.append(value['due_date'])
-    list_of_dates.sort(
-        key=lambda date: datetime.strptime(date, '%m/%d/%y'))
-
     if channel_id in data:
         assignment = data[channel_id]['section_id'][section_id]['assignment']
-        i = 0
         for key, value in assignment.items():
-            if value['due_date'] == list_of_dates[i]:
-                await ctx.send(f"{i + 1}: {value['name']} on {list_of_dates[i]} at {value['time_due']}")
-                i += 1
+            await ctx.send(f"{key}: {value['name']} on {value['due_date']} at {value['time_due']}")
 
         return None
 

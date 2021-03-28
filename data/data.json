@@ -20,49 +20,14 @@
                         "time_due": "11:59pm"
                     },
                     "4": {
-                        "name": "Some random program",
+                        "name": "Quiz 0",
                         "due_date": "04/06/21",
                         "time_due": "11:59pm"
                     },
                     "5": {
-                        "name": "some assignment thing",
-                        "due_date": "12/13/23",
-                        "time_due": "10:30PM"
-                    },
-                    "6": {
-                        "name": "something",
-                        "due_date": "10/20/30",
-                        "time_due": "10:30"
-                    },
-                    "7": {
-                        "name": "something",
-                        "due_date": "10/20/30",
-                        "time_due": "10:30"
-                    },
-                    "8": {
-                        "name": "something",
-                        "due_date": "10/20/30",
-                        "time_due": "10:30"
-                    },
-                    "9": {
-                        "name": "something",
-                        "due_date": "10/20/30",
-                        "time_due": "10:30"
-                    },
-                    "10": {
-                        "name": "something",
-                        "due_date": "10/20/30",
-                        "time_due": "10:30"
-                    },
-                    "11": {
-                        "name": "something",
-                        "due_date": "10/20/30",
-                        "time_due": "10:30"
-                    },
-                    "12": {
-                        "name": "something",
-                        "due_date": "10/20/31",
-                        "time_due": "10:30"
+                        "name": "Exam 1",
+                        "due_date": "5/11/21",
+                        "time_due": "12:00PM"
                     }
                 }
             },
@@ -93,17 +58,17 @@
             "001": {
                 "assignment": {
                     "1": {
-                        "name": "How to Print a Variable",
+                        "name": "Arrays",
                         "due_date": "4/7/21",
                         "time_due": "11:59pm"
                     },
                     "2": {
-                        "name": "Data Types",
+                        "name": "Pointers",
                         "due_date": "4/15/21",
                         "time_due": "11:59pm"
                     },
                     "3": {
-                        "name": "What is a program?",
+                        "name": "Project 1",
                         "due_date": "4/21/21",
                         "time_due": "11:59pm"
                     }
@@ -112,18 +77,18 @@
             "002": {
                 "assignment": {
                     "1": {
-                        "name": "How to Print a Variable",
-                        "due_date": "4/9/21",
+                        "name": "Arrays",
+                        "due_date": "4/8/21",
                         "time_due": "11:59pm"
                     },
                     "2": {
-                        "name": "Data Types",
-                        "due_date": "4/17/21",
+                        "name": "Pointers",
+                        "due_date": "4/18/21",
                         "time_due": "11:59pm"
                     },
                     "3": {
-                        "name": "What is a program?",
-                        "due_date": "4/23/21",
+                        "name": "Project 1",
+                        "due_date": "4/27/21",
                         "time_due": "11:59pm"
                     }
                 }
@@ -136,17 +101,17 @@
             "001": {
                 "assignment": {
                     "1": {
-                        "name": "How to Print a Variable",
+                        "name": "Java Program 1",
                         "due_date": "4/7/21",
                         "time_due": "11:59pm"
                     },
                     "2": {
-                        "name": "Data Types",
+                        "name": "Quiz 1",
                         "due_date": "4/15/21",
                         "time_due": "11:59pm"
                     },
                     "3": {
-                        "name": "What is a program?",
+                        "name": "Homework 1",
                         "due_date": "4/21/21",
                         "time_due": "11:59pm"
                     }
@@ -155,18 +120,18 @@
             "002": {
                 "assignment": {
                     "1": {
-                        "name": "How to Print a Variable",
-                        "due_date": "4/9/21",
+                        "name": "Java Program 1",
+                        "due_date": "4/7/21",
                         "time_due": "11:59pm"
                     },
                     "2": {
-                        "name": "Data Types",
-                        "due_date": "4/17/21",
+                        "name": "Quiz 1",
+                        "due_date": "4/15/21",
                         "time_due": "11:59pm"
                     },
                     "3": {
-                        "name": "What is a program?",
-                        "due_date": "4/23/21",
+                        "name": "Homework 1",
+                        "due_date": "4/21/21",
                         "time_due": "11:59pm"
                     }
                 }
@@ -179,17 +144,17 @@
             "001": {
                 "assignment": {
                     "1": {
-                        "name": "How to Print a Variable",
+                        "name": "Bash",
                         "due_date": "4/7/21",
                         "time_due": "11:59pm"
                     },
                     "2": {
-                        "name": "Data Types",
+                        "name": "Sed",
                         "due_date": "4/15/21",
                         "time_due": "11:59pm"
                     },
                     "3": {
-                        "name": "What is a program?",
+                        "name": "Shell",
                         "due_date": "4/21/21",
                         "time_due": "11:59pm"
                     }
@@ -198,17 +163,17 @@
             "002": {
                 "assignment": {
                     "1": {
-                        "name": "How to Print a Variable",
+                        "name": "Bash",
                         "due_date": "4/9/21",
                         "time_due": "11:59pm"
                     },
                     "2": {
-                        "name": "Data Types",
+                        "name": "Sed",
                         "due_date": "4/17/21",
                         "time_due": "11:59pm"
                     },
                     "3": {
-                        "name": "What is a program?",
+                        "name": "Shell",
                         "due_date": "4/23/21",
                         "time_due": "11:59pm"
                     }
